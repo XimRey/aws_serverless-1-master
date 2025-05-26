@@ -1,0 +1,302 @@
+# # "org" ensures this Service is used with the correct Serverless Framework Access Key.
+# org: 25252525
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: aws-serverless
+service: sls-aws
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  environment: # Aquí es donde defines tus variables de entorno
+    ACCES_KEY_ID_ENV_VAR: ${env:ACCES_KEY_ID_ENV_VAR}
+    SECRET_ACCESS_KEY_ENV_VAR: ${env:SECRET_ACCESS_KEY_ENV_VAR}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "sts:AssumeRole"
+      Resource: "arn:aws:iam::844598627082:role/Serverless"
+ 
+functions:
+
+# FUNCIONES PARA CORREOS DE TODOS LOS DIAS 8 AM
+  emailbv:
+    handler: Every_day/emailbolivia.emailbv
+    timeout: 300 
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(02 13 * * ? *)" # cron(d * * ? * ) 6am Bogota UTC
+          description: "All Days 6am"
+          enabled: false
+  emailcr:
+    handler: Every_day/emailcostarica.emailcr
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(03 13 * * ? *)"  
+          description: "All Days 8am"
+          enabled: true
+  emailgt:
+    handler: Every_day/emailguatemala.emailgt
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(00 13 * * ? *)"  
+          description: "All Days 8am"
+          enabled: true
+  emailhn:
+    handler: Every_day/emailhonduras.emailhn
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(02 13 * * ? *)"  
+          description: "All Days 8am"
+          enabled: true
+  emailmx:
+    handler: Every_day/emailmexico.emailmx
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(01 13 * * ? *)"  
+          description: "All Days 8am"
+          enabled: true
+  emailpn:
+    handler: Every_day/emailpanama.emailpn
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(03 13 * * ? *)"  
+          description: "All Days 8am"
+          enabled: true
+  emailpe:
+    handler: Every_day/emailperu.emailpe
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(02 13 * * ? *)"  
+          description: "All Days 8am"
+          enabled: true
+  emailsv:
+    handler: Every_day/emailsalvador.emailsv
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(01 13 * * ? *)"  
+          description: "All Days 8am"
+          enabled: true
+  emailve:
+    handler: Every_day/emailvenezuela.emailve
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(04 13 * * ? *)"  
+          description: "All Days 8am"
+          enabled: true
+
+# FUNCIONES PARA CORREOS DE DAVID 
+
+  emailbvd: 
+    handler: Every_friday_and_sunday/d-emailbolivia.emailbvd
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(02 13 ? * FRI,SUN *)"  
+          description: "Viernes y domingos"
+          enabled: false
+  emailcrd:
+    handler: Every_friday_and_sunday/d-emailcostarica.emailcrd
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(03 13 ? * FRI,SUN *)"  
+          description: "Viernes y domingos"
+          enabled: false
+  emailgtd:
+    handler: Every_friday_and_sunday/d-emailguatemala.emailgtd
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(00 13 ? * FRI,SUN *)"  
+          description: "Viernes y domingos"
+          enabled: false
+  emailhnd:
+    handler: Every_friday_and_sunday/d-emailhonduras.emailhnd
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(02 13 ? * FRI,SUN *)"  
+          description: "Viernes y domingos"
+          enabled: false
+  emailmxd:
+    handler: Every_friday_and_sunday/d-emailmexico.emailmxd
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(00 13 ? * FRI,SUN *)"  
+          description: "Viernes y domingos"
+          enabled: false
+  emailpnd:
+    handler: Every_friday_and_sunday/d-emailpanama.emailpnd
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(03 13 ? * FRI,SUN *)"  
+          description: "Viernes y domingos"
+          enabled: false
+  emailsvd:
+    handler: Every_friday_and_sunday/d-emailsalvador.emailsvd
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(00 13 ? * FRI,SUN *)"  
+          description: "Viernes y domingos"
+          enabled: false
+  emailved:
+    handler: Every_friday_and_sunday/d-emailvenezuela.emailved
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(03 13 ? * FRI,SUN *)"  
+          description: "Viernes y domingos"
+          enabled: false
+  emailped:
+    handler: Every_friday_and_sunday/d-emailperu.emailped
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(02 13 ? * FRI,SUN *)"  
+          description: "Viernes y domingos"
+          enabled: false
+
+# TODOS LOS LUNES A LAS 6AM
+
+  emailcrM6:
+    handler: Every_monday/M6-emailcostarica.emailcrM6
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    # events:
+    #   - schedule: 
+    #       rate: "cron(18 12 ? * MON *)"  
+    #       description: "All Mondays 6am"
+    #       enabled: true
+  emailhnM6:
+    handler: Every_monday/M6-emailhonduras.emailhnM6
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    # events:
+    #   - schedule: 
+    #       rate: "cron(19 12 ? * MON *)"  
+    #       description: "All Mondays 6am"
+    #       enabled: true
+  emailveM6:
+    handler: Every_monday/M6-emailvenezuela.emailveM6
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    # events:
+    #   - schedule: 
+    #       rate: "cron(20 12 ? * MON *)"  
+    #       description: "All Mondays 6am"
+    #       enabled: true
+
+  
+  # EL 1ero DE CADA MES
+
+  emailbvFDEM:
+    handler: First_day_every_month/FDEM-emailbolivia.emailbvFDEM 
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(21 12 1 * ? *)"  
+          description: "All Days 6am"
+          enabled: false
+  emailcrFDEM:
+    handler: First_day_every_month/FDEM-emailcostarica.emailcrFDEM
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(22 12 1 * ? *)"  
+          description: "All Days 6am"
+          enabled: false
+  emailgtFDEM:
+    handler: First_day_every_month/FDEM-emailguatemala.emailgtFDEM
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(23 12 1 * ? *)"  
+          description: "All Days 6am"
+          enabled: false
+  emailhnFDEM:
+    handler: First_day_every_month/FDEM-emailhonduras.emailhnFDEM
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(24 12 1 * ? *)"  
+          description: "All Days 6am"
+          enabled: false
+  emailmxFDEM:
+    handler: First_day_every_month/FDEM-emailmexico.emailmxFDEM
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(25 12 1 * ? *)"  
+          description: "All Days 6am"
+          enabled: false
+  emailpnFDEM:
+    handler: First_day_every_month/FDEM-emailpanama.emailpnFDEM
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(26 12 1 * ? *)"  
+          description: "All Days 6am"
+          enabled: false
+  emailsvFDEM:
+    handler: First_day_every_month/FDEM-emailsalvador.emailsvFDEM
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(27 12 1 * ? *)"  
+          description: "All Days 6am"
+          enabled: false 
+  emailveFDEM:
+    handler: First_day_every_month/FDEM-emailvenezuela.emailveFDEM
+    timeout: 300
+    role: arn:aws:iam::844598627082:role/Serverless
+    events:
+      - schedule: 
+          rate: "cron(28 12 1 * ? *)"  
+          description: "All Days 6am"
+          enabled: false
+    # events:
+    #   - schedule: rate(1 minute)
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
